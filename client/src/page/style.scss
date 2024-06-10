@@ -514,14 +514,60 @@
   }
 }
 
+:root {
+  --background-color: #FEFFD2;
+  --text-color: black;
+  --button-background: #193949;
+  --button-color: #FEFFD2;
+  --bgCurve-colour: #EFFFB5;
+}
+
+[data-theme='dark'] {
+  --background-color: #121212;
+  --text-color: white;
+  --button-background: #ffffff;
+  --button-color: #191949;
+  --bgCurve-colour: #151516;
+}
+
+/* Default button styles */
+.toggle-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--button-background);
+  color: var(--button-color);
+  transition: background-color 1s ease;
+}
+
+/* Transition state */
+.transitioning {
+  background-color: var(--button-bg-transition);
+}
+
+/* Background color for transition states */
+[data-theme='light'] .transitioning {
+  --button-bg-transition: white;
+}
+
+[data-theme='dark'] .transitioning {
+  --button-bg-transition: black;
+}
+
+.toggle {
+  margin-top: 7%;
+  margin-bottom: 7%;
+}
+
 .Auth {
   display: block;
   position: fixed;
   z-index: 1000;
   height: 100%;
   width: 100%;
-  background: white;
-  color: #000000;
+  background: var(--background-color);
+  color: var(--text-color);
 
   .inner {
     display: flex;
@@ -533,18 +579,9 @@
     .suggection {
       height: 100%;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-
-      svg {
-        margin-bottom: 0.5rem;
-      }
-
-      p {
-        text-align: center;
-        margin-bottom: 0.5rem;
-      }
 
       .btns {
         display: flex;
@@ -553,11 +590,11 @@
         margin-top: 0.5rem;
 
         button {
-          width: 5em;
+          width: 6em;
           height: 3em;
           text-align: center;
-          background: #191949;
-          color: rgba(255, 255, 255, 1);
+          background: var(--button-background);
+          color: var(--button-color);
           border-radius: 0.25rem;
           border: none;
           cursor: pointer;
@@ -565,9 +602,72 @@
           -moz-transition: all 0.1s ease-in-out;
 
           &:hover {
-            background: #191949;
+            background: var(--button-background);
           }
         }
+      }
+      
+      .left-column {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative; 
+        height: 100%;
+      }   
+
+      .right-column {
+        flex: 1;
+        height: 100%;        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .bgCurve {
+          background-color: var(--bgCurve-colour);
+          border-radius: 0 0 20% 20%;
+          border-style: hidden;
+          border-width: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          p {
+            font-size: 95%;
+
+            h1 {
+              font-size: 200%;
+              margin-top: 4%;
+            }
+          }
+        }
+      }
+
+      .right-column p {
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .left-column {
+          height: 30%;
+          width: 100%;
+        }
+
+        .right-column {
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .suggection {
+        flex-direction: column;
       }
     }
 
@@ -598,3 +698,4 @@
     }
   }
 }
+

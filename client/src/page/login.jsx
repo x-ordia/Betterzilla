@@ -8,13 +8,11 @@ import "./style.scss";
 
 const Login = () => {
   const location = useLocation();
-
   const [auth, setAuth] = useState(false);
-
   const { user } = useSelector((state) => state);
-
+  const [theme, setTheme] = useState('light');
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,44 +31,74 @@ const Login = () => {
     }
   }, [location]);
 
+  const toggleTheme = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      const newTheme = theme === 'light' ? 'dark' : 'light';
+      setTheme(newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
+      setIsTransitioning(false);
+    }, 500);
+  };
+
+  const backgroundImage = theme === 'light' 
+    ? 'url(https://images.unsplash.com/photo-1586145571648-77f9424a97d6?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)'
+    : 'url(https://images.unsplash.com/photo-1552570173-1e3d3eaf989c?q=80&w=1530&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)';
+
+  const colourValue = theme === 'light' ? "#FFD" : "#344356";
+  const opacityValue = theme === 'light' ? 0.8 : 0.8;
+  
   return (
     <div className="Auth">
       <div className="inner">
         {auth ? (
-          <LoginComponent />
+          <LoginComponent themeValue={theme}/>
         ) : (
           <div className="suggection">
-            <div>
-              <Grant />
+            <div 
+              className="left-column" 
+              style={{ backgroundImage, 
+                       backgroundRepeat: 'no-repeat',
+                       backgroundPosition: 'center center',
+                       backgroundSize: 'cover'
+                    }}
+            >
+              <Grant bgColour={colourValue} bgOpacity={opacityValue}/>
             </div>
-
-            <div>
-              <p>Welcome to GE CoPilot™</p>
-              <p>Log in or Sign up with your account to continue</p>
-            </div>
-
-            <div className="btns">
-              <button
-                onClick={() => {
-                  navigate("/login/auth");
-                }}
-              >
-                Log in
-              </button>
-              <button
-                onClick={() => {
-                  navigate("/signup");
-                }}
-              >
-                Sign up
-              </button>
+            <div className="right-column">
+              <div className="bgCurve">  
+                <p>Welcome to <h1>GE CoPilot™</h1></p>
+                <br /><br />
+                <p>Start your new chat now!</p>
+                <br /><br /><br />
+                <p>Log in or Sign up with your account to continue</p>
+                <div className="btns">
+                  <button onClick={() => { navigate("/login/auth"); }}>
+                    Log in
+                  </button>
+                  <button onClick={() => { navigate("/signup"); }}>
+                    Sign up
+                  </button>
+                </div>
+                <br />
+              </div>
+              <div className="toggle">
+                <p>Not pleasing your eyes?</p>
+                <button
+                  className={`toggle-button ${isTransitioning ? 'transitioning' : ''}`}
+                  onClick={toggleTheme}
+                >
+                  Toggle to {theme === 'light' ? 'Dark' : 'Light'} Mode
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-        <div className="bottum">
+        {/* redundant code for this page */}
+        {/* <div className="bottum">
           
-        </div>
+        </div> */}
       </div>
     </div>
   );
