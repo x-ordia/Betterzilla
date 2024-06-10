@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useReducer, useState } from 'react'
 import { Grant, Tick, Google, Microsoft, Mail, } from '../../assets'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useGoogleLogin } from '@react-oauth/google'
 import FormFeild from './FormFeild'
 import axios from 'axios'
@@ -20,6 +20,9 @@ const reducer = (state, { type, status }) => {
 }
 
 const SignupComponent = () => {
+
+  const location = useLocation();
+  const { colourValue, opacityValue, backgroundImage } = location.state || {};
 
   const navigate = useNavigate()
 
@@ -103,138 +106,145 @@ const SignupComponent = () => {
   }, [])
 
   return (
-    <div className='Contain'>
-      <div className='icon'>
-        <Grant />
+    <div className="loginComponentContainer">
+      <div className="leftColumn" style={{
+        backgroundImage, 
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover'
+      }}>
+        <Grant bgColour={colourValue} bgOpacity={opacityValue}/>
       </div>
+      <div className='Contain' style={{flex: '1', width: '50%'}}>
 
-      {
-        !state.mail ? (
-          <Fragment>
-            <div>
-              <h1>Create your account</h1>
+        {
+          !state.mail ? (
+            <Fragment>
+              <div>
+                <h1 style={{textAlign: 'center'}}>Create your account</h1>
 
-              <p>Please note that phone verification is required for signup. Your number will only be used to verify your identity for security purposes.</p>
+                <p>Please note that phone verification is required for signup. Your number will only be used to verify your identity for security purposes.</p>
 
-            </div>
+              </div>
 
-            {
-              !state.filled ? (
-                <div className='options'>
-                  <form className="manual" onSubmit={(e) => {
-                    e.preventDefault()
-                    setFormData({ ...formData, manual: true })
-                    stateAction({ type: 'filled', status: true })
-                  }}>
-                    <div>
+              {
+                !state.filled ? (
+                  <div className='options'>
+                    <form className="manual" onSubmit={(e) => {
+                      e.preventDefault()
+                      setFormData({ ...formData, manual: true })
+                      stateAction({ type: 'filled', status: true })
+                    }}>
+                      <div>
 
-                      <FormFeild
-                        value={formData.email}
-                        name={'email'}
-                        label={"Email address"}
-                        type={"email"}
-                        handleInput={handleInput}
-                      />
+                        <FormFeild
+                          value={formData.email}
+                          name={'email'}
+                          label={"Email address"}
+                          type={"email"}
+                          handleInput={handleInput}
+                        />
+                      </div>
+                      <div>
+                        <button type='submit' >Continue</button>
+                      </div>
+                    </form>
+
+                    <div data-for="acc-sign-up-login">
+                      <span>Already have an account?</span>
+                      <Link to={'/login/auth'}>Log in</Link>
                     </div>
+
+                    <div className="extra">
+                      <div className="divide">
+                        <span>OR</span>
+                      </div>
+
+                      <div className="btns" id='options'>
+                        <button onClick={googleAuth}><Google /> Continue with Google</button>
+                      </div>
+
+                    </div>
+                  </div>
+                ) : (
+                  <form className='Form' onSubmit={formHandle}>
                     <div>
-                      <button type='submit' >Continue</button>
+                      <div className="email">
+                        <button type='button' onClick={() => {
+                          stateAction({ type: 'filled', status: false })
+                        }} >Edit</button>
+
+                        <FormFeild
+                          value={formData.email}
+                          name={'email'}
+                          type={"email"}
+                          isDisabled
+                          error={state?.error} />
+                      </div>
+
+                      <div>
+                        {state?.error && <div className='error'><div>!</div> The user already exists.</div>}
+                      </div>
+
+                      <div className="password">
+
+                        <FormFeild
+                          value={formData.pass}
+                          name={'pass'}
+                          label={"Password"}
+                          type={"password"}
+                          passwordClass={passwordClass}
+                          handleInput={handleInput}
+                        />
+
+                      </div>
+
+                      <div id='alertBox'>
+                        Your password must contain:
+
+                        <p id='passAlertError' className='active'>
+                          <span>&#x2022;</span>
+                          &nbsp;
+                          At least 8 characters
+                        </p>
+
+                        <p id='passAlertDone' className='active'>
+                          <span><Tick /></span>
+                          &nbsp;
+                          At least 8 characters
+                        </p>
+                      </div>
+
+                      <button type='submit'>Continue</button>
+
+                    </div>
+                    <div data-for="acc-sign-up-login">
+                      <span>Already have an account?</span>
+                      <Link to={'/login/auth'}>Log in</Link>
                     </div>
                   </form>
+                )
+              }
+            </Fragment>
+          ) : (
+            <div className='mail'>
+              <div className='icon'>
+                <Mail />
+              </div>
 
-                  <div data-for="acc-sign-up-login">
-                    <span>Already have an account?</span>
-                    <Link to={'/login/auth'}>Log in</Link>
-                  </div>
+              <div>
+                <h3>Check Your Email</h3>
+              </div>
 
-                  <div className="extra">
-                    <div className="divide">
-                      <span>OR</span>
-                    </div>
+              <div>
+                <p>Please check the email address {formData.email} for instructions to signup.</p>
+              </div>
 
-                    <div className="btns" id='options'>
-                      <button onClick={googleAuth}><Google /> Continue with Google</button>
-                    </div>
-
-                  </div>
-                </div>
-              ) : (
-                <form className='Form' onSubmit={formHandle}>
-                  <div>
-                    <div className="email">
-                      <button type='button' onClick={() => {
-                        stateAction({ type: 'filled', status: false })
-                      }} >Edit</button>
-
-                      <FormFeild
-                        value={formData.email}
-                        name={'email'}
-                        type={"email"}
-                        isDisabled
-                        error={state?.error} />
-                    </div>
-
-                    <div>
-                      {state?.error && <div className='error'><div>!</div> The user already exists.</div>}
-                    </div>
-
-                    <div className="password">
-
-                      <FormFeild
-                        value={formData.pass}
-                        name={'pass'}
-                        label={"Password"}
-                        type={"password"}
-                        passwordClass={passwordClass}
-                        handleInput={handleInput}
-                      />
-
-                    </div>
-
-                    <div id='alertBox'>
-                      Your password must contain:
-
-                      <p id='passAlertError' className='active'>
-                        <span>&#x2022;</span>
-                        &nbsp;
-                        At least 8 characters
-                      </p>
-
-                      <p id='passAlertDone' className='active'>
-                        <span><Tick /></span>
-                        &nbsp;
-                        At least 8 characters
-                      </p>
-                    </div>
-
-                    <button type='submit'>Continue</button>
-
-                  </div>
-                  <div data-for="acc-sign-up-login">
-                    <span>Already have an account?</span>
-                    <Link to={'/login/auth'}>Log in</Link>
-                  </div>
-                </form>
-              )
-            }
-          </Fragment>
-        ) : (
-          <div className='mail'>
-            <div className='icon'>
-              <Mail />
-            </div>
-
-            <div>
-              <h3>Check Your Email</h3>
-            </div>
-
-            <div>
-              <p>Please check the email address {formData.email} for instructions to signup.</p>
-            </div>
-
-            <button onClick={() => formHandle(null)}>Resend Mail</button>
-          </div >
-        )
-      }
+              <button onClick={() => formHandle(null)}>Resend Mail</button>
+            </div >
+          )
+        }
+      </div >
     </div >
   )
 }

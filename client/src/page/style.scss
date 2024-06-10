@@ -515,18 +515,18 @@
 }
 
 :root {
-  --background-color: #FEFFD2;
-  --text-color: black;
-  --button-background: #193949;
+  --background-color: #DDD;
+  --text-color: #222;
+  --button-background: #191949;
   --button-color: #FEFFD2;
-  --bgCurve-colour: #EFFFB5;
+  --bgCurve-colour: #DDDDFF;
 }
 
 [data-theme='dark'] {
   --background-color: #121212;
-  --text-color: white;
-  --button-background: #ffffff;
-  --button-color: #191949;
+  --text-color: #DDD;
+  --button-background: #BBF;
+  --button-color: #191919;
   --bgCurve-colour: #151516;
 }
 

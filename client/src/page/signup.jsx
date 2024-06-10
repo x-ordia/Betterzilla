@@ -70,9 +70,10 @@ const Signup = () => {
           <>
             <SignupComponent />
 
-            <div className="bottum">
+            {/* redundant code */}
+            {/* <div className="bottum">
               
-            </div>
+            </div> */}
           </>
         )}
       </div>

@@ -19,7 +19,7 @@ const reducer = (state, { type, status }) => {
   }
 };
 
-const LoginComponent = () => {
+const LoginComponent = ({colourValue, backgroundImage, opacityValue}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState(false);
@@ -111,39 +111,46 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="Contain">
-      <div className="icon">
-        <Grant />
+    <div className="loginComponentContainer">
+      <div className="leftColumn" style={{
+        backgroundImage, 
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover'
+      }}>
+        <Grant bgColour={colourValue} bgOpacity={opacityValue}/>
       </div>
+      <div className="Contain" style={{flex: '1', width: '50%'}}>
 
-      <div>
-        {!state.filled ? <h1>Welcome back</h1> : <h1>Enter your password</h1>}
+        <div>
+          {!state.filled ? <h1>Welcome back</h1> : <h1>Enter your password</h1>}
+        </div>
+
+        {!email && !password ? (
+          <LoginEmail
+            formData={formData}
+            handleInput={handleInput}
+            googleAuth={googleAuth}
+            stateAction={stateAction}
+            setEmail={setEmail}
+          />
+        ) : email && !password ? (
+          <LoginEmailPassword
+            formHandle={formHandle}
+            stateAction={stateAction}
+            formData={formData}
+            handleInput={handleInput}
+            state={state}
+          />
+        ) : (
+          <Two_Step_Auth
+            formData={formData}
+            handleInput={handleInput}
+            otpHandle={otpHandle}
+            state={state}
+          />
+        )}
       </div>
-
-      {!email && !password ? (
-        <LoginEmail
-          formData={formData}
-          handleInput={handleInput}
-          googleAuth={googleAuth}
-          stateAction={stateAction}
-          setEmail={setEmail}
-        />
-      ) : email && !password ? (
-        <LoginEmailPassword
-          formHandle={formHandle}
-          stateAction={stateAction}
-          formData={formData}
-          handleInput={handleInput}
-          state={state}
-        />
-      ) : (
-        <Two_Step_Auth
-          formData={formData}
-          handleInput={handleInput}
-          otpHandle={otpHandle}
-          state={state}
-        />
-      )}
     </div>
   );
 };

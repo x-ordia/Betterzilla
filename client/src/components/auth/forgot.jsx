@@ -103,7 +103,7 @@ const ForgotComponent = ({ isRequest, userId, secret }) => {
                             !state.mail ? (
                                 <Fragment>
                                     <div>
-                                        <h1>Reset your password</h1>
+                                        <h1 style={{textAlign: 'center'}}>Reset your password</h1>
 
                                         <p>Enter your email address and we will send you instructions to reset your password.</p>
                                     </div>

@@ -1,8 +1,43 @@
 .Auth .inner {
+      
+    .loginComponentContainer {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .leftColumn {
+        flex: 1;
+        display: flex;
+        float: left;
+        width: 50%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    @media (max-width: 768px) {
+        .Contain {
+            float: none;
+        }
+
+        .leftColumn {
+            width: 100%;
+        }
+
+        .loginComponentContainer {
+            flex-direction: column;
+        }
+    }
+
     .Contain {
         display: flex;
         flex-direction: column;
-        height: auto;
+        float: left;
+        height: 100%;
         width: 100%;
         justify-content: center;
         align-items: center;
@@ -18,8 +53,9 @@
 
         h1 {
             padding-top: 5rem;
-            color: #2D333A;
-            font-size: 32px;
+            color: var(--text-color);
+            font-size: 160%;
+            margin-bottom: 5%;
         }
 
         p {
@@ -175,7 +211,8 @@
                         color: #2D333A;
                         font-size: 12px;
                         background: #FFFFFF;
-
+                        border: 0px solid #000;
+                        border-radius: 50%;
                     }
                 }
 
@@ -214,7 +251,7 @@
                         }
 
                         &:hover {
-                            background: rgba(0, 0, 0, .1);
+                            transform: scale(1.05);
                             cursor: pointer;
                         }
                     }
@@ -227,7 +264,7 @@
             justify-content: center;
             display: flex;
             flex-direction: row;
-            margin-top: 1rem;
+            margin-top: 2rem;
 
             span,
             a {
@@ -236,12 +273,12 @@
             }
 
             span {
-                color: #2D333A;
+                color: var(--text-color);
                 padding-right: 3px;
             }
 
             a {
-                color: #191949;
+                color: var(--button-background);
                 padding: 5px 5px;
                 border-radius: 3px;
                 transition: all .2s ease-in-out;
@@ -264,10 +301,10 @@
                     width: 18rem;
                     padding-left: 16px;
                     padding-right: 16px;
-                    color: #2d333a;
+                    color: var(--text-color);
                     border: 1px solid #c2c8d0;
-                    background: white;
-                    border-radius: 3px;
+                    background: var(--background-colour);
+                    border-radius: 10px;
                     line-height: 1.1;
                     outline: none;
                     font-size: 16px;
@@ -308,6 +345,7 @@
                     width: calc((18rem + 16px) - 4rem);
                     padding-left: 16px;
                     padding-right: 4rem;
+                    color: var(--text-color);
 
                     @media screen and (max-width:340px) {
                         width: calc((100%) - (4rem + 16px));
@@ -385,7 +423,7 @@
                 border-radius: 3px;
                 padding: 1rem;
                 font-size: 12px;
-                color: #2D333A;
+                color: var(--text-color);
 
                 p {
                     display: none;
@@ -394,10 +432,14 @@
                     color: #2D333A;
                 }
 
+                #passAlertError {
+                    color: var(--text-color);
+                }
+
                 #passAlertDone {
                     padding-left: .5rem;
                     position: relative;
-                    color: #191949 !important;
+                    color: var(--button-background) !important;
 
                     svg {
                         position: absolute;
@@ -416,10 +458,10 @@
                 margin-top: 1rem;
 
                 a {
-                    color: #191949;
+                    color: var(--button-background);
                     padding: 5px 5px;
                     border-radius: 3px;
-                    font-size: 12px;
+                    font-size: 80%;
                     text-decoration: none;
                     transition: all .2s ease-in-out;
                     -moz-transition: all .2s ease-in-out;
@@ -434,7 +476,7 @@
                 text-align: center;
                 height: 52px;
                 width: calc(18rem + 33px);
-                margin-top: 1.5rem;
+                margin-top: 2.5rem;
                 color: #FFFFFF;
                 background: #191949;
                 transition: all .1s ease-in-out;
@@ -503,7 +545,7 @@
                 margin-top: 1rem;
                 margin-bottom: 7rem;
                 cursor: pointer;
-                color: #191949;
+                color: var(--button-background);
             }
 
         }
@@ -535,12 +577,12 @@
             h3 {
                 font-weight: normal;
                 font-size: 25px;
-                color: #2D333A;
+                color: var(--text-color);
                 margin-top: 2rem;
             }
 
             p {
-                color: #2D333A;
+                color: var(--text-color);
                 font-size: 12px;
                 line-height: 1.5rem;
             }
@@ -561,7 +603,7 @@
 
                 &:hover {
                     cursor: pointer;
-                    background: rgba(0, 0, 0, .1);
+                    transform: scale(1.05);
                 }
             }
         }

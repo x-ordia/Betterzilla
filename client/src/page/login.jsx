@@ -52,7 +52,7 @@ const Login = () => {
     <div className="Auth">
       <div className="inner">
         {auth ? (
-          <LoginComponent themeValue={theme}/>
+          <LoginComponent colourValue={colourValue} backgroundImage={backgroundImage} opacityValue={opacityValue}/>
         ) : (
           <div className="suggection">
             <div 
@@ -70,13 +70,13 @@ const Login = () => {
                 <p>Welcome to <h1>GE CoPilot™</h1></p>
                 <br /><br />
                 <p>Start your new chat now!</p>
-                <br /><br /><br />
-                <p>Log in or Sign up with your account to continue</p>
+                <br /><br />
+                <p>Sign up or Log in with your account to continue</p>
                 <div className="btns">
-                  <button onClick={() => { navigate("/login/auth"); }}>
+                  <button onClick={() => { navigate("/login/auth", { state: { colourValue: colourValue, opacityValue: opacityValue, backgroundImage: backgroundImage } }); }}>
                     Log in
                   </button>
-                  <button onClick={() => { navigate("/signup"); }}>
+                  <button onClick={() => { navigate('/signup', { state: { colourValue: colourValue, opacityValue: opacityValue, backgroundImage: backgroundImage } }); }}>
                     Sign up
                   </button>
                 </div>
