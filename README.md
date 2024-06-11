@@ -1,3 +1,7 @@
+Output
+![image](https://github.com/x-ordia/Betterzilla/assets/89120526/c36a5ec2-b1eb-4201-aaed-968bd2d68eda)
+![image](https://github.com/x-ordia/Betterzilla/assets/89120526/57b9cc70-7f3a-44a6-8297-1d8d2dc3bee5)
+
 
 **Frontend - **
 
